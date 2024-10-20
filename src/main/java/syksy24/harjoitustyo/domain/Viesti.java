@@ -90,10 +90,6 @@ public class Viesti {
         this.henkilo = henkilo;
     }
 
-    @Override
-    public String toString() {
-        return "Viesti [id=" + id + ", teksti=" + teksti + ", paivamaara=" + paivamaara + ", hevonen=" + hevonen
-                + ", henkilo=" + henkilo + "]";
-    }
+    
 
 }

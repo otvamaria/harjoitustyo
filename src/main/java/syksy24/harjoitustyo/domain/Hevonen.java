@@ -102,10 +102,6 @@ public class Hevonen {
         this.viestit = viestit;
     }
 
-    @Override
-    public String toString() {
-        return "Hevonen [id=" + id + ", nimi=" + nimi + ", rotu=" + rotu + ", syntVuosi=" + syntVuosi + ", henkilo="
-                + henkilo + ", viestit=" + viestit + "]";
-    }
+    
 
 }

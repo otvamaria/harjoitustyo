@@ -110,11 +110,7 @@ public class Henkilo {
         this.viestit = viestit;
     }
 
-    @Override
-    public String toString() {
-        return "Henkilo [id=" + id + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi + ", puhelin=" + puhelin
-                + ", sahkoposti=" + sahkoposti + ", hevoset=" + hevoset + "]";
-    }
+    
 
 
 }

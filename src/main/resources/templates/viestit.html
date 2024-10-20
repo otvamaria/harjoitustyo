@@ -41,7 +41,21 @@
             margin-bottom: 5px; 
         }
 
-        
+        .toiminnot {
+            margin-top: 15px;
+        }
+
+        .toiminnot a {
+            margin-right: 10px;
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .toiminnot a:hover {
+            text-decoration: underline;
+        }
+
+    
     </style>
 </head>
 <body>
@@ -57,7 +71,12 @@
             <span class="viesti-kirjoittaja" th:text="${viesti.henkilo.etunimi}"></span>
         </div>
         <span th:text="${viesti.teksti}"></span>
+        <div class="toiminnot">
+            <a th:href="@{'/muokkaa/' + ${viesti.id}}">Muokkaa</a>
+            <a th:href="@{'/poista/' + ${viesti.id}}">Poista</a>
+        </div>
     </div>
+    
 </div>
 
 </body>

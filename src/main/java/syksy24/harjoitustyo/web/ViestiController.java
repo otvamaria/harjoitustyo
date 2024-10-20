@@ -53,11 +53,13 @@ public class ViestiController {
         return "viestit";
 }
 
+
+
     @GetMapping("/lisaaviesti")
     public String lisaaviesti(Model model) {
         model.addAttribute("viesti", new Viesti());
         model.addAttribute("hevoset", hevonenRepository.findAll());
-        model.addAttribute("henkilot", henkiloRepository.findAll());
+        //model.addAttribute("henkilot", henkiloRepository.findAll());
         return "lisaaviesti";
     }
 
