@@ -25,9 +25,9 @@ public class HarjoitustyoApplication {
 	public CommandLineRunner testiData(ViestiRepository viestiRepository, HevonenRepository hevonenRepository, HenkiloRepository henkiloRepository) {
 		return (args) -> {
 
-			Henkilo henkilo1 = new Henkilo("Liisa", "Lopponen", "040-98765432", "liisa.lopponen@osoite.com", null, null);
-			Henkilo henkilo2 = new Henkilo("Maija", "Miikkulainen", "050-4561237", "maija.m@sahkoposti.com", null, null);
-			Henkilo henkilo3 = new Henkilo("Matti", "Muttonen", "040-1234667", "mattimuttonen@mailiosoite.fi", null, null);
+			Henkilo henkilo1 = new Henkilo("user", "$2a$10$aYzIugkyZ/U18AMCCSbpSuptM096SGxTWYX5YqzOUqXfU8GXOxOnK", "Liisa", "Lopponen", "040-98765432", "liisa.lopponen@osoite.com", "USER", null, null);
+			Henkilo henkilo2 = new Henkilo("admin", "$2a$10$0biol8FjOcs3mBRTfRgNqOauNXFPWNuOacp9oAPNhImMHUtVgteOW", "Maija", "Miikkulainen", "050-4561237", "maija.m@sahkoposti.com", "ADMIN", null, null);
+			Henkilo henkilo3 = new Henkilo("user2", "$2a$10$BtiJrEm3.dI.UmjaPgh4NuXwXQ4Qy1I6YQPtHMslymG8rQeP2Ioge", "Matti", "Muttonen", "040-1234667", "mattimuttonen@mailiosoite.fi", "USER", null, null);
 
 			henkiloRepository.save(henkilo1);
 			henkiloRepository.save(henkilo2);

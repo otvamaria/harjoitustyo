@@ -23,6 +23,12 @@ public class Henkilo {
     @Column(name = "henkiloid", nullable = false, updatable = false)
     private long id;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
     @NotEmpty(message="Etunimi puuttuu")
     private String etunimi;
 
@@ -35,6 +41,9 @@ public class Henkilo {
     @Email(message="Tarkista sähköpostiosoite")
     private String sahkoposti;
 
+    @Column(name = "user_role", nullable = false)
+    private String role;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "henkilo")
     @JsonManagedReference(value="henkilo-hevonen")
     private List<Hevonen> hevoset;
@@ -45,14 +54,20 @@ public class Henkilo {
 
     public Henkilo() {}
 
-    public Henkilo(String etunimi, String sukunimi, String puhelin, String sahkoposti, List<Hevonen> hevoset, List<Viesti> viestit) {
+    public Henkilo(String username, String passwordHash, String etunimi,
+            String sukunimi, String puhelin, String sahkoposti, String role, List<Hevonen> hevoset,
+            List<Viesti> viestit) {
+        this.username = username;
+        this.passwordHash = passwordHash;
         this.etunimi = etunimi;
         this.sukunimi = sukunimi;
         this.puhelin = puhelin;
         this.sahkoposti = sahkoposti;
+        this.role = role;
         this.hevoset = hevoset;
         this.viestit = viestit;
     }
+
 
     public long getId() {
         return id;
@@ -60,6 +75,22 @@ public class Henkilo {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getEtunimi() {
@@ -92,6 +123,14 @@ public class Henkilo {
 
     public void setSahkoposti(String sahkoposti) {
         this.sahkoposti = sahkoposti;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public List<Hevonen> getHevoset() {

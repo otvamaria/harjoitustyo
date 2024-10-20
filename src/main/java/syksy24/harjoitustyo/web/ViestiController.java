@@ -67,7 +67,7 @@ public class ViestiController {
     public String tallennaViesti(@Valid @ModelAttribute("viesti") Viesti viesti, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("hevoset", hevonenRepository.findAll());
-            model.addAttribute("henkilot", henkiloRepository.findAll());
+            //model.addAttribute("henkilot", henkiloRepository.findAll());
             return "lisaaviesti";
         }
         viestiRepository.save(viesti);
