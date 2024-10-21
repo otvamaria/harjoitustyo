@@ -31,6 +31,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         );
     }
 
+    public Henkilo haeHenkiloKayttajatunnuksella(String username) {
+        return henkilorepository.findByUsername(username);
+    }
+
 }
 
 

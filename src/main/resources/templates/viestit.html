@@ -67,7 +67,7 @@
 
     <div th:each="viesti : ${entry.value}" class="viesti">
         <div class="viestilaatikko">
-            <span th:text="${#dates.format(viesti.paivamaara, 'dd.MM.yyyy')}"></span>
+            <span th:text="${#temporals.format(viesti.paivamaara, 'dd.MM.yyyy')}"></span>
             <span class="viesti-kirjoittaja" th:text="${viesti.henkilo.etunimi}"></span>
         </div>
         <span th:text="${viesti.teksti}"></span>

@@ -4,11 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.validation.Valid;
 import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
+import syksy24.harjoitustyo.domain.Henkilo;
 import syksy24.harjoitustyo.domain.HenkiloRepository;
 import syksy24.harjoitustyo.domain.Hevonen;
 import syksy24.harjoitustyo.domain.HevonenRepository;
@@ -34,6 +37,9 @@ public class ViestiController {
 
     @Autowired
     private HenkiloRepository henkiloRepository;
+
+    @Autowired 
+    private UserDetailServiceImpl userDetailServiceImpl;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -54,25 +60,29 @@ public class ViestiController {
 }
 
 
-
     @GetMapping("/lisaaviesti")
-    public String lisaaviesti(Model model) {
+    public String naytaViestiLomake(Model model) {
+
         model.addAttribute("viesti", new Viesti());
         model.addAttribute("hevoset", hevonenRepository.findAll());
-        //model.addAttribute("henkilot", henkiloRepository.findAll());
-        return "lisaaviesti";
-    }
+    
+    return "lisaaviesti";
+}
+
 
     @PostMapping("/tallennaviesti")
-    public String tallennaViesti(@Valid @ModelAttribute("viesti") Viesti viesti, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("hevoset", hevonenRepository.findAll());
-            //model.addAttribute("henkilot", henkiloRepository.findAll());
-            return "lisaaviesti";
-        }
+    public String tallennaViesti(@ModelAttribute Viesti viesti) {
+        viesti.setPaivamaara(LocalDateTime.now());
+
+        org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String kirjautunutKayttaja = auth.getName(); 
+        Henkilo henkilo = userDetailServiceImpl.haeHenkiloKayttajatunnuksella(kirjautunutKayttaja);
+
+        viesti.setHenkilo(henkilo);
         viestiRepository.save(viesti);
-        return "redirect:viestit";
-    }
+
+        return "redirect:/viestit";
+}
 
     //@PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("poista/{id}")

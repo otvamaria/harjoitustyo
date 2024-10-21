@@ -11,7 +11,8 @@ import syksy24.harjoitustyo.domain.HenkiloRepository;
 import syksy24.harjoitustyo.domain.Henkilo;
 import syksy24.harjoitustyo.domain.Hevonen;
 import syksy24.harjoitustyo.domain.Viesti;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -43,11 +44,11 @@ public class HarjoitustyoApplication {
 			hevonenRepository.save(hevonen3);
 			hevonenRepository.save(hevonen4);
 
-			Viesti viesti1 = new Viesti("Muista laittaa Pollelle loimi päälle yöksi", new Date(), hevonen1, henkilo2);
-			Viesti viesti2 = new Viesti("Nerolta kenkä irronnut, kengittäjä tilattu", new Date(), hevonen3, henkilo2);
-			Viesti viesti3 = new Viesti("Tessan etujalassa haava, puhdistus ohjeen mukaan päivittäin", new Date(), hevonen2, henkilo1);
-			Viesti viesti4 = new Viesti("Neron kaura-annos puolitettu toistaiseksi", new Date(), hevonen3, henkilo3);
-			Viesti viesti5 = new Viesti("Muista puhdistaa Donnan tarha kunnolla", new Date(), hevonen4, henkilo1);
+			Viesti viesti1 = new Viesti("Muista laittaa Pollelle loimi päälle yöksi", LocalDateTime.now(), hevonen1, henkilo2);
+			Viesti viesti2 = new Viesti("Nerolta kenkä irronnut, kengittäjä tilattu", LocalDateTime.now(), hevonen3, henkilo2);
+			Viesti viesti3 = new Viesti("Tessan etujalassa haava, puhdistus ohjeen mukaan päivittäin", LocalDateTime.now(), hevonen2, henkilo1);
+			Viesti viesti4 = new Viesti("Neron kaura-annos puolitettu toistaiseksi", LocalDateTime.now(), hevonen3, henkilo3);
+			Viesti viesti5 = new Viesti("Muista puhdistaa Donnan tarha kunnolla", LocalDateTime.now(), hevonen4, henkilo1);
 
 			viestiRepository.save(viesti1);
 			viestiRepository.save(viesti2);

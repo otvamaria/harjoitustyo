@@ -63,8 +63,8 @@
 
 <form th:action="@{/tallennaviesti}" th:object="${viesti}" method="post">
     <label for="hevonen">Hevonen:</label>
-    <select id="hevonen" th:field="*{hevonen}" required style="width: 30%;">
-        <option th:each="hevonen : ${hevoset}" th:value="${hevonen}" th:text="${hevonen.nimi}">Valitse hevonen</option>
+    <select id="hevonen" th:field="*{hevonen.id}" required style="width: 30%;">
+        <option th:each="hevonen : ${hevoset}" th:value="${hevonen.id}" th:text="${hevonen.nimi}">Valitse hevonen</option>
     </select>
 
     <label for="teksti">Viestin sisältö:</label>

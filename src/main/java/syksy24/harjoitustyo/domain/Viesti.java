@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -29,7 +29,7 @@ public class Viesti {
     private String teksti;
 
     @NotNull
-    private Date paivamaara;
+    private LocalDateTime paivamaara;
 
     @ManyToOne
     @JoinColumn(name="hevosid")
@@ -43,7 +43,7 @@ public class Viesti {
 
     public Viesti() {}
 
-    public Viesti(String teksti, Date paivamaara, Hevonen hevonen, Henkilo henkilo) {
+    public Viesti(String teksti, LocalDateTime paivamaara, Hevonen hevonen, Henkilo henkilo) {
         this.teksti = teksti;
         this.paivamaara = paivamaara;
         this.hevonen = hevonen;
@@ -66,11 +66,11 @@ public class Viesti {
         this.teksti = teksti;
     }
 
-    public Date getPaivamaara() {
+    public LocalDateTime getPaivamaara() {
         return paivamaara;
     }
 
-    public void setPaivamaara(Date paivamaara) {
+    public void setPaivamaara(LocalDateTime paivamaara) {
         this.paivamaara = paivamaara;
     }
 
