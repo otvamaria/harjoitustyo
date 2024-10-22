@@ -20,3 +20,5 @@ public class HenkiloController {
         return "henkilot"; 
     }
 }
+
+//Tähän ei tule muita toimintoja, kuin kaikkien henkilöiden listaus

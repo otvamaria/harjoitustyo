@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>Viestitaulu</title>
     <style>
@@ -119,18 +119,19 @@
                         </div>
                         <span th:text="${viesti.teksti}"></span>
                         <div class="toiminnot">
-                            <a th:href="@{'/muokkaa/' + ${viesti.id}}">Muokkaa</a>
-                            <a th:href="@{'/poista/' + ${viesti.id}}">Poista</a>
+
+                        <!-- Tähän tulossa myös USER-käyttäjälle muokkaus ja poista painikkeet, silloin kun user on viestin kirjoittaja  -->
+                            <a th:href="@{'/muokkaa/' + ${viesti.id}}" 
+                               sec:authorize="hasRole('ROLE_ADMIN') ">Muokkaa</a>
+                        
+                            <a th:href="@{'/poista/' + ${viesti.id}}" 
+                               sec:authorize="hasRole('ROLE_ADMIN') ">Poista</a>
                         </div>
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
-    
-    <div style="text-align: center; margin-top: 20px;">
-        <a th:href="@{'/naytaviestit'}">Takaisin viestitauluun</a>
-    </div>
     
 
 </body>

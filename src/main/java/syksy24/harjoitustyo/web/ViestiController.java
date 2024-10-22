@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-//import jakarta.validation.Valid;
+import jakarta.validation.Valid;
 import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
 import syksy24.harjoitustyo.domain.Henkilo;
@@ -56,6 +57,7 @@ public class ViestiController {
         .collect(Collectors.groupingBy(Viesti::getHevonen));
 
         model.addAttribute("viestitRyhmitys", viestitRyhmitys);
+        model.addAttribute("userDetailServiceImpl", userDetailServiceImpl);
         return "naytaviestit";
 }
 
@@ -83,14 +85,16 @@ public class ViestiController {
 
         return "redirect:/naytaviestit";
 }
-
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    //lisää tähän vielä userille poistotoiminto, jos on viestin kirjoittaja
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("poista/{id}")
     public String poistaViesti(@PathVariable("id") Long id) {
         viestiRepository.deleteById(id);
         return "redirect:/naytaviestit";
     }
 
+    //lisää tähän vielä userille muokkaustoiminto, jos on viestin kirjoittaja
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("muokkaa/{id}")
     public String muokkaaViesti(@PathVariable("id") Long id, Model model) {
         model.addAttribute("viesti", viestiRepository.findById(id).orElse(null));

@@ -1,5 +1,6 @@
 package syksy24.harjoitustyo.web;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,12 +10,17 @@ import org.springframework.stereotype.Service;
 
 import syksy24.harjoitustyo.domain.Henkilo;
 import syksy24.harjoitustyo.domain.HenkiloRepository;
+import syksy24.harjoitustyo.domain.Viesti;
+import syksy24.harjoitustyo.domain.ViestiRepository;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     HenkiloRepository henkilorepository;
+
+    @Autowired
+    ViestiRepository viestiRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {   
@@ -34,6 +40,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public Henkilo haeHenkiloKayttajatunnuksella(String username) {
         return henkilorepository.findByUsername(username);
     }
+
+    public boolean isViestiOwner(Long id, String username) {
+        Viesti viesti = viestiRepository.findById(id).orElse(null);
+        if (viesti == null) {
+            return false;
+        }
+        return viesti.getHenkilo().getUsername().equals(username);
+    }
+
 
 }
 

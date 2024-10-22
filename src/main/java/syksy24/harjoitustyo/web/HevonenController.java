@@ -19,3 +19,5 @@ public class HevonenController {
         return "hevoset";
     }
 }
+
+//Tähän ei tule muita toimintoja kuin kaikkien hevosten listaus
