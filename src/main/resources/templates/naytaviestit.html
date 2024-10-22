@@ -102,6 +102,13 @@
         <a class="henkilot-link" th:href="@{'/henkilot'}">Näytä henkilöt</a>
         <a class="henkilot-link" th:href="@{'/hevoset'}">Näytä hevoset</a>
     </div>
+
+    <div class="col-md-4">
+        <p>Käyttäjä: <span sec:authentication="name"></span></p>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Kirjaudu ulos" class="btn btn-danger btn-sm" />
+        </form>
+    </div>
     
     <table>
         <thead>
