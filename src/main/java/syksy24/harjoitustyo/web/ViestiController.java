@@ -93,19 +93,26 @@ public class ViestiController {
 
     @GetMapping("muokkaa/{id}")
     public String muokkaaViesti(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("muokkaaviestia", viestiRepository.findById(id).orElse(null));
-        model.addAttribute("horses", hevonenRepository.findAll());
-        model.addAttribute("persons", henkiloRepository.findAll());
+        model.addAttribute("viesti", viestiRepository.findById(id).orElse(null));
+        model.addAttribute("hevoset", hevonenRepository.findAll());
+        model.addAttribute("henkilot", henkiloRepository.findAll());
         return "muokkaaviestia";
     }
 
     @PostMapping("/tallennamuokkaukset")
-    public String tallennaMuokattuViesti(@Valid @ModelAttribute("muokkaaviestia") Viesti viesti, BindingResult bindingResult, Model model) {
+    public String tallennaMuokattuViesti(@ModelAttribute("viesti") Viesti viesti, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("hevoset", hevonenRepository.findAll());
             model.addAttribute("henkilot", henkiloRepository.findAll());
             return "muokkaaviestia";
         }
+        viesti.setPaivamaara(LocalDateTime.now());
+
+        org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String kirjautunutKayttaja = auth.getName(); 
+        Henkilo henkilo = userDetailServiceImpl.haeHenkiloKayttajatunnuksella(kirjautunutKayttaja);
+        
+        viesti.setHenkilo(henkilo);
         viestiRepository.save(viesti);
         return "redirect:/viestit";
     }

@@ -55,29 +55,37 @@
             text-decoration: underline;
         }
 
+        .buttons {
+            text-align: center;
+        }
+
     
     </style>
 </head>
 <body>
 
-<h1>Viestitaulu</h1>
+    <h1>Viestitaulu</h1>
 
-<div th:each="entry : ${viestitRyhmitys}" class="hevos-ryhma">
-    <h2 th:text="${entry.key.nimi}">Hevosen nimi</h2> 
-
-    <div th:each="viesti : ${entry.value}" class="viesti">
-        <div class="viestilaatikko">
-            <span th:text="${#temporals.format(viesti.paivamaara, 'dd.MM.yyyy')}"></span>
-            <span class="viesti-kirjoittaja" th:text="${viesti.henkilo.etunimi}"></span>
-        </div>
-        <span th:text="${viesti.teksti}"></span>
-        <div class="toiminnot">
-            <a th:href="@{'/muokkaa/' + ${viesti.id}}">Muokkaa</a>
-            <a th:href="@{'/poista/' + ${viesti.id}}">Poista</a>
-        </div>
+    <div class="buttons">
+        <a th:href="@{'/lisaaviesti'}">Lisää uusi viesti</a>
     </div>
     
-</div>
+    <div th:each="entry : ${viestitRyhmitys}" class="hevos-ryhma">
+        <h2 th:text="${entry.key.nimi}">Hevosen nimi</h2> 
+    
+        <div th:each="viesti : ${entry.value}" class="viesti">
+            <div class="viestilaatikko">
+                <span th:text="${#temporals.format(viesti.paivamaara, 'dd.MM.yyyy')}"></span>
+                <span class="viesti-kirjoittaja" th:text="${viesti.henkilo.etunimi}"></span>
+            </div>
+            <span th:text="${viesti.teksti}"></span>
+            <div class="toiminnot">
+                <a th:href="@{'/muokkaa/' + ${viesti.id}}">Muokkaa</a>
+                <a th:href="@{'/poista/' + ${viesti.id}}">Poista</a>
+            </div>
+        </div>
+        
+    </div>
 
 </body>
 </html>
