@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hevoset</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table, th, td {
+            border: 1px solid #2980b9;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #8e44ad;
+            color: white; 
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Hevosten tiedot</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Hevosen nimi</th>
+            <th>Rotu</th>
+            <th>Syntymävuosi</th>
+            <th>Omistaja</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="hevonen : ${hevoset}">
+            <td th:text="${hevonen.nimi}"></td>
+            <td th:text="${hevonen.rotu}"></td>
+            <td th:text="${hevonen.syntVuosi}"></td>
+            <td th:text="${hevonen.henkilo.etunimi} + ' ' + ${hevonen.henkilo.sukunimi}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a th:href="@{'/viestit'}">Takaisin viestitauluun</a>
+</div>
+
+</body>
+</html>

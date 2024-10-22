@@ -59,6 +59,17 @@
             text-align: center;
         }
 
+        .buttons a {
+            margin: 0 15px; 
+            color: #2980b9; 
+            text-decoration: none; 
+            font-size: 16px; 
+        }
+
+        .buttons a:hover {
+            text-decoration: underline; 
+        }
+
     
     </style>
 </head>
@@ -69,6 +80,7 @@
     <div class="buttons">
         <a th:href="@{'/lisaaviesti'}">Lisää uusi viesti</a>
         <a class="henkilot-link" th:href="@{'/henkilot'}">Näytä henkilöt</a>
+        <a class="henkilot-link" th:href="@{'/hevoset'}">Näytä hevoset</a>
     </div>
     
     <div th:each="entry : ${viestitRyhmitys}" class="hevos-ryhma">
