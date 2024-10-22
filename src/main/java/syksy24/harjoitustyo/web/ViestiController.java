@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
 import syksy24.harjoitustyo.domain.Henkilo;
@@ -111,7 +111,7 @@ public class ViestiController {
         org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String kirjautunutKayttaja = auth.getName(); 
         Henkilo henkilo = userDetailServiceImpl.haeHenkiloKayttajatunnuksella(kirjautunutKayttaja);
-        
+
         viesti.setHenkilo(henkilo);
         viestiRepository.save(viesti);
         return "redirect:/viestit";

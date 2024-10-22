@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Henkilöt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        table, th, td {
+            border: 1px solid #2980b9;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Henkilöiden tiedot</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Etunimi</th>
+            <th>Sukunimi</th>
+            <th>Puhelin</th>
+            <th>Sähköposti</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="henkilo : ${henkilot}">
+            <td th:text="${henkilo.etunimi}"></td>
+            <td th:text="${henkilo.sukunimi}"></td>
+            <td th:text="${henkilo.puhelin}"></td>
+            <td th:text="${henkilo.sahkoposti}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a th:href="@{'/viestit'}">Takaisin viestitauluun</a>
+</div>
+
+</body>
+</html>
