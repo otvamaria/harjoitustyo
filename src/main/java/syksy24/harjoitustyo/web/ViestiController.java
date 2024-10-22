@@ -48,7 +48,7 @@ public class ViestiController {
     }
 
     
-    @GetMapping("/viestit")
+    @GetMapping("/naytaviestit")
     public String naytaViestit(Model model) {
         List<Viesti> viestit = viestiRepository.findAll();
     
@@ -56,7 +56,7 @@ public class ViestiController {
         .collect(Collectors.groupingBy(Viesti::getHevonen));
 
         model.addAttribute("viestitRyhmitys", viestitRyhmitys);
-        return "viestit";
+        return "naytaviestit";
 }
 
 
@@ -81,14 +81,14 @@ public class ViestiController {
         viesti.setHenkilo(henkilo);
         viestiRepository.save(viesti);
 
-        return "redirect:/viestit";
+        return "redirect:/naytaviestit";
 }
 
     //@PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("poista/{id}")
     public String poistaViesti(@PathVariable("id") Long id) {
         viestiRepository.deleteById(id);
-        return "redirect:/viestit";
+        return "redirect:/naytaviestit";
     }
 
     @GetMapping("muokkaa/{id}")
@@ -114,6 +114,6 @@ public class ViestiController {
 
         viesti.setHenkilo(henkilo);
         viestiRepository.save(viesti);
-        return "redirect:/viestit";
+        return "redirect:/naytaviestit";
     }
 }

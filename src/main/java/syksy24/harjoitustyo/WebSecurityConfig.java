@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import syksy24.harjoitustyo.web.UserDetailServiceImpl;
 
 @Configuration
@@ -21,22 +21,29 @@ public class WebSecurityConfig {
     @Autowired
     private UserDetailServiceImpl userDetailsService;
 
+    private static final AntPathRequestMatcher[] WHITE_LIST_URLS = { 
+        new AntPathRequestMatcher("/viestit**"),
+        new AntPathRequestMatcher("/viestit/*")
+        
+    };
+        
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/index").permitAll()
+            .requestMatchers(WHITE_LIST_URLS).permitAll()
             .anyRequest().authenticated()
             )
             .headers(headers -> 
 			headers.frameOptions(frameOptions -> frameOptions 
 					.disable()))
             .formLogin(formlogin -> formlogin
-			.defaultSuccessUrl("/viestit", true).permitAll()
+			.defaultSuccessUrl("/naytaviestit", true).permitAll()
 
 			).logout(logout -> logout
-				.permitAll()
-			);
+				.permitAll())
+                .csrf(csrf -> csrf.disable());
 		return http.build();   
     }
 
