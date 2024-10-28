@@ -12,6 +12,7 @@ import syksy24.harjoitustyo.domain.Henkilo;
 import syksy24.harjoitustyo.domain.HenkiloRepository;
 import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
+import syksy24.harjoitustyo.exception.ViestiNotFoundException;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -41,13 +42,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return henkilorepository.findByUsername(username);
     }
 
-    public boolean isViestiOwner(Long id, String username) {
-        Viesti viesti = viestiRepository.findById(id).orElse(null);
-        if (viesti == null) {
-            return false;
-        }
-        return viesti.getHenkilo().getUsername().equals(username);
-    }
+    public boolean isViestiOwner(Long id, String username) { 
+    Viesti viesti = viestiRepository.findById(id)
+        .orElseThrow(() -> new ViestiNotFoundException("Viestiä ei löytynyt ID:llä: " + id));
+
+    return viesti.getHenkilo().getUsername().equals(username);
+}
 
 
 }

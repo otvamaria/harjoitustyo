@@ -6,13 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
+import syksy24.harjoitustyo.exception.ViestiNotFoundException;
 import syksy24.harjoitustyo.domain.Henkilo;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -32,13 +33,14 @@ public class RestViestiController {
     }
 
     @GetMapping("/viestit/{id}")
-    public Optional<Viesti> haeViestiIdlla(@PathVariable("id") Long id) {
-        return viestiRepository.findById(id);
+    public Viesti haeViestiIdlla(@PathVariable("id") Long id) {
+        return viestiRepository.findById(id)
+            .orElseThrow(() -> new ViestiNotFoundException("Viestiä ei löytynyt ID:llä: " + id));
     }
 
     
     @PostMapping("/viestit")
-    public ResponseEntity<Viesti> lisaaViesti(@RequestBody Viesti viesti) {
+    public ResponseEntity<Viesti> lisaaViesti(@Valid @RequestBody Viesti viesti) {
         viesti.setPaivamaara(LocalDateTime.now());
 
         // Kirjautuneen käyttäjän haku ja lisäys viestiin
@@ -54,25 +56,25 @@ public class RestViestiController {
 
 
     @PutMapping("viestit/{id}")
-    public Viesti paivitaViesti(@PathVariable("id") Long id, @RequestBody Viesti viesti) {
-        Optional<Viesti> olemassaOlevaViesti = viestiRepository.findById(id);
-
-        if (olemassaOlevaViesti.isPresent()) {
-            Viesti paivitettavaViesti = olemassaOlevaViesti.get();
-            paivitettavaViesti.setTeksti(viesti.getTeksti());
-            paivitettavaViesti.setPaivamaara(LocalDateTime.now()); 
-
-            paivitettavaViesti.setHevonen(viesti.getHevonen());
-            paivitettavaViesti.setHenkilo(viesti.getHenkilo());
-            return viestiRepository.save(paivitettavaViesti);
-        } else {
-            return viestiRepository.save(viesti);
-        }
+    public ResponseEntity<Viesti> paivitaViesti(@Valid @PathVariable("id") Long id, @RequestBody Viesti viesti) {
+        Viesti paivitettavaViesti = viestiRepository.findById(id)
+            .orElseThrow(() -> new ViestiNotFoundException("Viestiä ei löytynyt ID:llä: " + id));
+    
+        paivitettavaViesti.setTeksti(viesti.getTeksti());
+        paivitettavaViesti.setPaivamaara(LocalDateTime.now()); 
+        paivitettavaViesti.setHevonen(viesti.getHevonen());
+        paivitettavaViesti.setHenkilo(viesti.getHenkilo());
+    
+        return ResponseEntity.ok(viestiRepository.save(paivitettavaViesti));
     }
 
     @DeleteMapping("viestit/{id}")
-    public void poistaViesti(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> poistaViesti(@PathVariable("id") Long id) {
+   
         viestiRepository.deleteById(id);
-    }
+    
+        // Palauttaa 204 koodin
+        return ResponseEntity.noContent().build();
+}
 }
 

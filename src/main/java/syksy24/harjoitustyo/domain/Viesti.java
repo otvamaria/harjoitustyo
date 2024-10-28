@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -25,10 +26,11 @@ public class Viesti {
     @Column(name="viesti_id", nullable = false, updatable = false)
     private long id;
 
-    @NotEmpty
+    @NotEmpty(message="Viestikenttä ei voi olla tyhjä")
+    @Size(min = 1, max = 100, message="Viestin pituuden täytyy olla 1-100 merkkiä.")
     private String teksti;
 
-    @NotNull
+    @NotNull(message="Päivämäärä on pakollinen tieto.")
     private LocalDateTime paivamaara;
 
     @ManyToOne
