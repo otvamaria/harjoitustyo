@@ -47,7 +47,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         .orElseThrow(() -> new ViestiNotFoundException("Viestiä ei löytynyt ID:llä: " + id));
 
     return viesti.getHenkilo().getUsername().equals(username);
-}
+    }
 
 
 }

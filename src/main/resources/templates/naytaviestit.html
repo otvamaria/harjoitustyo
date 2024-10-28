@@ -127,12 +127,15 @@
                         <span th:text="${viesti.teksti}"></span>
                         <div class="toiminnot">
 
-                        <!-- Tähän tulossa myös USER-käyttäjälle muokkaus ja poista painikkeet, silloin kun user on viestin kirjoittaja  -->
-                            <a th:href="@{'/muokkaa/' + ${viesti.id}}" 
-                               sec:authorize="hasRole('ROLE_ADMIN') ">Muokkaa</a>
-                        
-                            <a th:href="@{'/poista/' + ${viesti.id}}" 
-                               sec:authorize="hasRole('ROLE_ADMIN') ">Poista</a>
+                        <a th:href="@{'/muokkaa/' + ${viesti.id}}"
+                               th:if="${#authentication.name == viesti.henkilo.username || #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                               Muokkaa
+                            </a>
+
+                            <a th:href="@{'/poista/' + ${viesti.id}}"
+                               th:if="${#authentication.name == viesti.henkilo.username || #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                               Poista
+                            </a>
                         </div>
                     </div>
                 </td>

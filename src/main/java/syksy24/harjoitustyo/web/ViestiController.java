@@ -84,16 +84,16 @@ public class ViestiController {
 
         return "redirect:/naytaviestit";
 }
-    //lisää tähän vielä userille poistotoiminto, jos on viestin kirjoittaja
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    
+    @PreAuthorize("hasRole('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
     @GetMapping("poista/{id}")
     public String poistaViesti(@PathVariable("id") Long id) {
         viestiRepository.deleteById(id);
         return "redirect:/naytaviestit";
     }
 
-    //lisää tähän vielä userille muokkaustoiminto, jos on viestin kirjoittaja
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   
+    @PreAuthorize("hasRole('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
     @GetMapping("muokkaa/{id}")
     public String muokkaaViesti(@PathVariable("id") Long id, Model model) {
         model.addAttribute("viesti", viestiRepository.findById(id).orElse(null));
