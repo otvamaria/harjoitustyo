@@ -3,6 +3,7 @@ package syksy24.harjoitustyo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
 import org.springframework.boot.CommandLineRunner;
 
 import syksy24.harjoitustyo.domain.ViestiRepository;
@@ -22,6 +23,7 @@ public class HarjoitustyoApplication {
 		SpringApplication.run(HarjoitustyoApplication.class, args);
 	}
 
+/* 
 	@Bean
 	public CommandLineRunner testiData(ViestiRepository viestiRepository, HevonenRepository hevonenRepository, HenkiloRepository henkiloRepository) {
 		return (args) -> {
@@ -84,6 +86,6 @@ public class HarjoitustyoApplication {
 
 
 	}
-
+*/
 }
 

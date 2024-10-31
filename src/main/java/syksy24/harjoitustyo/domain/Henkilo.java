@@ -30,15 +30,19 @@ public class Henkilo {
     private String passwordHash;
 
     @NotEmpty(message="Etunimi puuttuu")
+    @Column(name = "etunimi")
     private String etunimi;
 
     @NotEmpty(message="Sukunimi puuttuu")
+    @Column(name = "sukunimi")
     private String sukunimi;
 
     @NotEmpty(message="Puhelinnumero on pakollinen tieto")
+    @Column(name = "puhelin")
     private String puhelin;
 
     @Email(message="Tarkista sähköpostiosoite")
+    @Column(name = "sahkoposti")
     private String sahkoposti;
 
     @Column(name = "user_role", nullable = false)

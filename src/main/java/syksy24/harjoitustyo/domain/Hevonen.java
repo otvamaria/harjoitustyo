@@ -28,11 +28,14 @@ public class Hevonen {
     private long id;
 
     @NotEmpty(message="Hevosen nimi puuttuu")
+    @Column(name = "nimi")
     private String nimi;
 
+    @Column(name = "rotu")
     private String rotu;
 
     @NotNull
+    @Column(name = "syntvuosi")
     private int syntVuosi;
 
     @ManyToOne

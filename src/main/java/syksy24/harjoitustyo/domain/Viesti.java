@@ -27,10 +27,12 @@ public class Viesti {
     private long id;
 
     @NotEmpty(message="Viestikenttä ei voi olla tyhjä")
+    @Column(name="teksti")
     @Size(min = 1, max = 100, message="Viestin pituuden täytyy olla 1-100 merkkiä.")
     private String teksti;
 
     @NotNull(message="Päivämäärä on pakollinen tieto.")
+    @Column(name="paivamaara")
     private LocalDateTime paivamaara;
 
     @ManyToOne
