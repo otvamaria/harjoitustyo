@@ -85,7 +85,7 @@ public class ViestiController {
         return "redirect:/naytaviestit";
 }
     
-    @PreAuthorize("hasRole('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
+    @PreAuthorize("hasAuthority('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
     @GetMapping("poista/{id}")
     public String poistaViesti(@PathVariable("id") Long id) {
         viestiRepository.deleteById(id);
@@ -93,7 +93,7 @@ public class ViestiController {
     }
 
    
-    @PreAuthorize("hasRole('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
+    @PreAuthorize("hasAuthority('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
     @GetMapping("muokkaa/{id}")
     public String muokkaaViesti(@PathVariable("id") Long id, Model model) {
         model.addAttribute("viesti", viestiRepository.findById(id).orElse(null));
