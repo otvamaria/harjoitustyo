@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import syksy24.harjoitustyo.domain.ViestiRepository;
 import syksy24.harjoitustyo.domain.HevonenRepository;
@@ -20,12 +19,6 @@ import java.util.Arrays;
 public class HarjoitustyoApplication {
 
 	public static void main(String[] args) {
-
-		Dotenv dotenv = Dotenv.configure().load();
-
-        // Tarkistus, että ympäristömuuttujien haku onnistuu
-        System.out.println("DB Username: " + dotenv.get("SPRING_DATASOURCE_USERNAME"));
-        System.out.println("DB Password: " + dotenv.get("SPRING_DATASOURCE_PASSWORD"));
 
 		SpringApplication.run(HarjoitustyoApplication.class, args);
 	}
