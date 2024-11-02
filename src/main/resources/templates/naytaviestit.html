@@ -128,12 +128,12 @@
                         <div class="toiminnot">
 
                         <a th:href="@{'/muokkaa/' + ${viesti.id}}"
-                               th:if="${#authentication.name == viesti.henkilo.username || #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                               th:if="${#authentication.name == viesti.henkilo.username || #authorization.expression('hasAuthority(''ADMIN'')')}">
                                Muokkaa
                             </a>
 
                             <a th:href="@{'/poista/' + ${viesti.id}}"
-                               th:if="${#authentication.name == viesti.henkilo.username || #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                               th:if="${#authentication.name == viesti.henkilo.username || #authorization.expression('hasAuthority(''ADMIN'')')}">
                                Poista
                             </a>
                         </div>

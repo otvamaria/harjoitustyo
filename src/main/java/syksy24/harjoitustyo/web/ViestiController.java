@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,14 +51,24 @@ public class ViestiController {
     
     @GetMapping("/naytaviestit")
     public String naytaViestit(Model model) {
-        List<Viesti> viestit = viestiRepository.findAll();
     
-        Map<Hevonen, List<Viesti>> viestitRyhmitys = viestit.stream()
-        .collect(Collectors.groupingBy(Viesti::getHevonen));
+    List<Hevonen> hevoset = hevonenRepository.findAllByOrderByNimiAsc(); 
+    
+    List<Viesti> viestit = viestiRepository.findAll();
 
-        model.addAttribute("viestitRyhmitys", viestitRyhmitys);
-        model.addAttribute("userDetailServiceImpl", userDetailServiceImpl);
-        return "naytaviestit";
+    
+    Map<Hevonen, List<Viesti>> viestitRyhmitys = new LinkedHashMap<>();
+
+    for (Hevonen hevonen : hevoset) {
+        List<Viesti> hevosenViestit = viestit.stream()
+            .filter(viesti -> viesti.getHevonen() != null && viesti.getHevonen().equals(hevonen))
+            .collect(Collectors.toList());
+        viestitRyhmitys.put(hevonen, hevosenViestit);
+    }
+
+    model.addAttribute("viestitRyhmitys", viestitRyhmitys);
+    model.addAttribute("userDetailServiceImpl", userDetailServiceImpl);
+    return "naytaviestit";
 }
 
 
@@ -85,7 +96,7 @@ public class ViestiController {
         return "redirect:/naytaviestit";
 }
     
-    @PreAuthorize("hasRole('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
+    @PreAuthorize("hasAuthority('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
     @GetMapping("poista/{id}")
     public String poistaViesti(@PathVariable("id") Long id) {
         viestiRepository.deleteById(id);
@@ -93,7 +104,7 @@ public class ViestiController {
     }
 
    
-    @PreAuthorize("hasRole('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
+    @PreAuthorize("hasAuthority('ADMIN') or @userDetailServiceImpl.isViestiOwner(#id, authentication.name)")
     @GetMapping("muokkaa/{id}")
     public String muokkaaViesti(@PathVariable("id") Long id, Model model) {
         model.addAttribute("viesti", viestiRepository.findById(id).orElse(null));
