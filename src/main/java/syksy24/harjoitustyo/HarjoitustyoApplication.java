@@ -23,7 +23,8 @@ public class HarjoitustyoApplication {
 		SpringApplication.run(HarjoitustyoApplication.class, args);
 	}
 
-/* 
+/* H2-tietokannan kanssa käytettävä testidata:
+
 	@Bean
 	public CommandLineRunner testiData(ViestiRepository viestiRepository, HevonenRepository hevonenRepository, HenkiloRepository henkiloRepository) {
 		return (args) -> {

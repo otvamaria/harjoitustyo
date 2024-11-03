@@ -1,8 +1,6 @@
 package syksy24.harjoitustyo.web;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -42,12 +40,6 @@ public class ViestiController {
     @Autowired 
     private UserDetailServiceImpl userDetailServiceImpl;
 
-    @RequestMapping("/index")
-    @ResponseBody
-    public String returnMessage() {
-        return "Tervetuloa tallin viestitaululle";
-    }
-
     
     @GetMapping("/naytaviestit")
     public String naytaViestit(Model model) {
@@ -66,9 +58,9 @@ public class ViestiController {
         viestitRyhmitys.put(hevonen, hevosenViestit);
     }
 
-    model.addAttribute("viestitRyhmitys", viestitRyhmitys);
-    model.addAttribute("userDetailServiceImpl", userDetailServiceImpl);
-    return "naytaviestit";
+        model.addAttribute("viestitRyhmitys", viestitRyhmitys);
+        model.addAttribute("userDetailServiceImpl", userDetailServiceImpl);
+        return "naytaviestit";
 }
 
 

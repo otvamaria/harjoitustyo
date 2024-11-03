@@ -54,7 +54,7 @@ public class RepositoryTests {
     }
 
     @Test
-    public void testHevonenLoytyy() {
+    public void testHevonenLoytyyNimella() {
         Hevonen tessa = hevonenRepository.findByNimi("Tessa");
         assertThat(tessa).isNotNull(); 
 
@@ -113,10 +113,6 @@ public class RepositoryTests {
         assertThat(haettuHenkilo).isPresent();
         assertThat(haettuHenkilo.get().getEtunimi()).isEqualTo("Matti");
     }
-
-    
-
-    
 
        
 }

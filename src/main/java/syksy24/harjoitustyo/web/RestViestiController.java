@@ -12,8 +12,10 @@ import syksy24.harjoitustyo.domain.ViestiRepository;
 import syksy24.harjoitustyo.exception.ViestiNotFoundException;
 import syksy24.harjoitustyo.domain.Henkilo;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @RestController
 @RequestMapping
@@ -47,8 +49,8 @@ public class RestViestiController {
         org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String kirjautunutKayttaja = auth.getName();
         Henkilo henkilo = userDetailServiceImpl.haeHenkiloKayttajatunnuksella(kirjautunutKayttaja);
-
         viesti.setHenkilo(henkilo);
+
         Viesti uusiViesti = viestiRepository.save(viesti);
         ResponseEntity<Viesti> responseEntity = new ResponseEntity<>(uusiViesti, HttpStatus.CREATED);
         return responseEntity;

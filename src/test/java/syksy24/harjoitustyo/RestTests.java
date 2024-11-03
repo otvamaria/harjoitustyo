@@ -1,11 +1,9 @@
 package syksy24.harjoitustyo;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -13,14 +11,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.http.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
+import syksy24.harjoitustyo.web.UserDetailServiceImpl;
 
 
 
@@ -31,12 +32,18 @@ public class RestTests {
     private WebApplicationContext webAppContext;
     private MockMvc mockMvc;
 
+    @Mock
     @Autowired
     private ViestiRepository viestiRepository;
+
+    @Autowired
+    @Mock
+    private UserDetailServiceImpl userDetailServiceImpl;
 
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -46,7 +53,7 @@ public class RestTests {
     }
 
     @Test
-    public void testHaeKaikkiViestitResponseTypeApplicationJson() throws Exception {
+    public void testHaeKaikkiViestitResponseJson() throws Exception {
         mockMvc.perform(get("/viestit"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)) 
                 .andExpect(status().isOk()); 
@@ -60,13 +67,23 @@ public class RestTests {
             .andExpect(status().isOk()) 
             .andExpect(content().contentType(MediaType.APPLICATION_JSON)) 
             .andExpect(jsonPath("$.teksti").value("Muista laittaa Pollelle loimi ulos")); 
-}
+    }
+
+
+    @Test
+    public void poistaViestiPalauttaaStatus204() throws Exception {
+        long viestiId = 200; 
+        Mockito.doNothing().when(viestiRepository).deleteById(viestiId);
+
+        mockMvc.perform(delete("/viestit/" + viestiId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
     
 
    
-    }
+}
 
-    // Voit lisätä lisää testejä viestien tarkastamiseksi...
 
 
 
