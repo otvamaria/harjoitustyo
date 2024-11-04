@@ -2,6 +2,9 @@ package syksy24.harjoitustyo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/* H2-kannan kanssa käytettävät importit:
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
 
@@ -14,6 +17,7 @@ import syksy24.harjoitustyo.domain.Viesti;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+*/
 
 @SpringBootApplication
 public class HarjoitustyoApplication {

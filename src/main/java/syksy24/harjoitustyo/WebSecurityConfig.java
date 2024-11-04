@@ -23,8 +23,8 @@ public class WebSecurityConfig {
 
     private static final AntPathRequestMatcher[] WHITE_LIST_URLS = { 
         new AntPathRequestMatcher("/viestit**"),
-        new AntPathRequestMatcher("/viestit/*")
-        
+        new AntPathRequestMatcher("/henkilolistaus"),
+        new AntPathRequestMatcher("/hevoslistaus")
     };
         
 
