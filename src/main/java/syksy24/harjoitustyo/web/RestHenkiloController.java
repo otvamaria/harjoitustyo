@@ -21,5 +21,6 @@ public class RestHenkiloController {
     public List<Henkilo> getAllHenkilot() {
         return henkiloRepository.findAll(); 
     }
+    
 
 }
