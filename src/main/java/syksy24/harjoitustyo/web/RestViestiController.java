@@ -10,8 +10,10 @@ import jakarta.validation.Valid;
 import syksy24.harjoitustyo.domain.Viesti;
 import syksy24.harjoitustyo.domain.ViestiRepository;
 import syksy24.harjoitustyo.exception.ViestiNotFoundException;
+import syksy24.harjoitustyo.exception.HevonenNotFoundException;
 import syksy24.harjoitustyo.domain.Henkilo;
-
+import syksy24.harjoitustyo.domain.Hevonen;
+import syksy24.harjoitustyo.domain.HevonenRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +26,8 @@ public class RestViestiController {
     @Autowired
     private ViestiRepository viestiRepository;
 
+    @Autowired
+    private HevonenRepository hevonenRepository;
 
     @Autowired
     private UserDetailServiceImpl userDetailServiceImpl;
@@ -51,6 +55,12 @@ public class RestViestiController {
         Henkilo henkilo = userDetailServiceImpl.haeHenkiloKayttajatunnuksella(kirjautunutKayttaja);
         viesti.setHenkilo(henkilo);
 
+        if (viesti.getHevonen() != null) {
+            // Hae hevonen ja liitä se viestiin
+            Hevonen hevonen = hevonenRepository.findById(viesti.getHevonen().getId())
+                .orElseThrow(() -> new HevonenNotFoundException("Hevosta ei löytynyt ID:llä: " + viesti.getHevonen().getId()));
+            viesti.setHevonen(hevonen);
+        }
         Viesti uusiViesti = viestiRepository.save(viesti);
         ResponseEntity<Viesti> responseEntity = new ResponseEntity<>(uusiViesti, HttpStatus.CREATED);
         return responseEntity;

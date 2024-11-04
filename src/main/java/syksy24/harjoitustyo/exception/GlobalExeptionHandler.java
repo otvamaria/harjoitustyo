@@ -32,6 +32,15 @@ public class GlobalExeptionHandler {
         return errorResponse;
     }
 
+    @ExceptionHandler(HevonenNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleHevonenNotFound(HevonenNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", ex.getMessage());
+        return errorResponse;
+    }
+
+
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleUsernameNotFoundException(UsernameNotFoundException ex) {
